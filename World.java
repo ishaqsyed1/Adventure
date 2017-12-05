@@ -74,7 +74,8 @@ public class World{
   }
   
   public Location getEntrance(){
-    return entrance;
+	  System.out.println("Changes");
+	  return entrance;
   }
   
   public Thing getGoal(){ return goal;}
