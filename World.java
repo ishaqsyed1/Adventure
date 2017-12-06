@@ -35,8 +35,8 @@ public class World{
 	for(int offset=0; offset < numberOfRooms; offset++) {
 		int currentRoomNum = Integer.parseInt(lines[0 + 1 + (offset*5)]);
 		String roomName = lines[ 1 + 1 + (offset*5)];
-		String[] roomsList = (lines[2 + 1 + (offset*5)]).split(", ");
-		String [] playerNum = (lines[3 + 1 + (offset*5)]).split(" , ");
+		String[] roomsList = (lines[2 + 1 + (offset*5)]).split(",");
+		String [] playerNum = (lines[3 + 1 + (offset*5)]).split(",");
 		String thingNum = (lines[4 + 1 + (offset*5)]);
 
 		// displays the roomNumber as String
@@ -52,13 +52,13 @@ public class World{
 	// creates array from file for adjacent rooms
 		ArrayList<Location> adjacentRooms = new ArrayList<Location>();
 		for(int room=0; room < roomsList.length; room++) {
-			int adjacentRoomNum = Integer.parseInt(roomsList[room]);
+			int adjacentRoomNum = Integer.parseInt(roomsList[room].trim());
 			Location adjRoomLocation = new Location(this, 0, 0);
 			adjacentRooms.add(adjRoomLocation);
 			
 		ArrayList<Location> playerList = new ArrayList<Location>();
 			for(int player=0; player < playerNum.length; player++) {
-				int playerRoomNum = Integer.parseInt(playerNum[player]);
+				int playerRoomNum = Integer.parseInt(playerNum[player].trim());
 				Location playerLocation = new Location(this, 0,0);
 				playerList.add(playerLocation);
 			}
@@ -69,7 +69,8 @@ public class World{
 				adjacentRooms,
                 new java.util.ArrayList<Player>(),
                 new java.util.ArrayList<Thing>());
-	}	
+		System.out.print(room);
+	}
 	
   }
   
