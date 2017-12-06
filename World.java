@@ -8,11 +8,11 @@ public class World{
     Room r1 = new Room("the entrance", new Location(this,0,0), 
                       new java.util.ArrayList<Location>(),
                       new java.util.ArrayList<Player>(),
-                      new java.util.ArrayList<Thing>());
+                      new java.util.ArrayList<Thing>(),false);
     Room r2 = new Room("a dark room", new Location(this,0,1), 
                       new java.util.ArrayList<Location>(),
                       new java.util.ArrayList<Player>(),
-                      new java.util.ArrayList<Thing>());
+                      new java.util.ArrayList<Thing>(),false);
     r1.getAdjacentRooms().add(r2.getLocation());
     r2.getAdjacentRooms().add(r1.getLocation());
   
@@ -64,12 +64,26 @@ public class World{
 			}
 		}
 		
-		
+
 		Room room =new Room(roomName, new Location(this,0,0), 
 				adjacentRooms,
                 new java.util.ArrayList<Player>(),
-                new java.util.ArrayList<Thing>());
+                new java.util.ArrayList<Thing>(),false);
 		System.out.print(room);
+		switch (offset){
+			case 0:
+				rooms[1][0]=room;
+				break;
+			case 1:
+				rooms[2][0]=room;
+				break;
+			case 2:
+				rooms[2][1]=room;
+				break;
+			case 3:
+				rooms[1][1]=room;
+				break;
+		}
 	}
 	
   }

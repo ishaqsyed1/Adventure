@@ -17,7 +17,6 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 		World world = new World(worldConfig);
 	}
 }

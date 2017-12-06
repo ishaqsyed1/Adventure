@@ -26,6 +26,7 @@ public abstract class Player{
  public Player(World w, String name, Location location, int health,
                List<Thing>  things, Thing goal)
  {
+
   this.w = w;
   this.name = name;
   this.location = location;

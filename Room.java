@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 public class Room{
   protected String         description;
@@ -6,15 +7,17 @@ public class Room{
   protected List<Location> adjacent;
   protected List<Player>   people;
   protected List<Thing>    things;
-  
+  protected boolean dark;
   public Room(String description, Location location, List<Location> adjacent, 
-              List<Player> people, List<Thing> things)
+              List<Player> people, List<Thing> things,boolean isDark)
   {
     this.description = description;
     this.location = location;
     this.adjacent = adjacent;
     this.people = people;
     this.things = things;
+    //this variable kinda acts like a light switch, the look function will tell you what is in the room only if it's true
+    dark=isDark;
   }
   
   /* getters */
@@ -22,11 +25,51 @@ public class Room{
   public List<Location> getAdjacentRooms(){ return adjacent; }
   public List<Player>   getPlayers(){ return people; }
   public List<Thing>    getThings(){ return things; }
-  
+  public String getDescription(){return description;}
+  public boolean isDark(){return dark;}
   public String look(){
     // return a string describing the room 
     // (what is in it, what exits you have, etc)
-    return this.toString();
+    String[] itemLocationOptions =new String[]{"on the","lying on the"};
+    String[] itemPreOptions = new String[]{"you a notice a <name>","there's a <name>","after a closer look, you find a <name>","holy guacamole there's a <name>","wowsers you found a <name>"};
+    String tresure = "Oh would you look at that, a chest full of gold waiting just for you!!!";
+
+    String[] peoplePre = new String[] {"Sitting in a corner you find <name>","\"It stinks in here, it's probably because <name> is sleeping over there\"","\"Big room? battle music in the background?! Someone must be here!\"" +
+            "\n *looks around* \n It's <name>"};
+    StringBuilder b = new StringBuilder();
+    b.append("You walk into a");
+    Random r = new Random();
+    if(dark){
+      b.append(" dark");
+    }
+    b.append(" room.");
+    if(dark){
+      b.append("\nMaybe if you have a flashlight or something you'll be able to see?");
+    }else{
+      if(people.size()>0){
+        b.append("/n/nIt seems that there's people in the room...\n");
+        for(Player i : people){
+          b.append(peoplePre[r.nextInt(peoplePre.length)].replace("<name>",i.getName()));
+        }
+      }
+      if(things.size()>0){
+        for(Thing i: things){
+          b.append(itemPreOptions[r.nextInt(itemPreOptions.length)].replace("<name>",i.getName()));
+          b.append(itemLocationOptions[r.nextInt(itemLocationOptions.length)]);
+          b.append("ground.");
+        }
+      }
+    }
+    if(dark){
+      b.append("\n\nIt seems the only door you can see is the one you came from...");
+    }else{
+      b.append("\n\n The doors in this room lead to:");
+      for(Location i: adjacent){
+        b.append("A door to ");
+        b.append(i.getWorld().rooms[i.col][i.row].getDescription());
+      }
+    }
+    return b.toString();
   }
   
   
@@ -42,9 +85,9 @@ public class Room{
   public void addThing(Thing t){
     this.things.add(t);
   }
-  
-  
-  
+
+
+
   @Override
   public String toString(){
     return description;
