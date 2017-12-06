@@ -36,7 +36,7 @@ public class World{
 		String[] roomsList = (lines[2 + 1 + (offset*5)]).split(",");
 		String [] playerNum = (lines[3 + 1 + (offset*5)]).split(",");
 		String thingNum = (lines[4 + 1 + (offset*5)]);
-		Location roomLocation=roomLocations[currentRoomNum-1];
+		Location roomLocation=getRoomLocationFromID(currentRoomNum,numberOfRooms);
 
 		// displays the roomNumber as String
 		System.out.println(currentRoomNum);
@@ -53,7 +53,7 @@ public class World{
 		for(int room=0; room < roomsList.length; room++) {
 			int adjacentRoomNum = Integer.parseInt(roomsList[room].trim());
 
-			Location adjRoomLocation = roomLocations[adjacentRoomNum-1];
+			Location adjRoomLocation = getRoomLocationFromID(adjacentRoomNum,numberOfRooms);
 			adjacentRooms.add(adjRoomLocation);
 			
 		ArrayList<Location> playerList = new ArrayList<Location>();
@@ -78,7 +78,7 @@ public class World{
 	  return entrance;
   }
   public Location getRoomLocationFromID(int id,int total){
-  	return new Location((id-1)%(total/2),id>?)
+  	return new Location(this,(id-1)%(total/2),id>(total/2)?1:0);
   }
   public Thing getGoal(){ return goal;}
   
