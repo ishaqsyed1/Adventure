@@ -9,16 +9,17 @@ public class HealthPotion extends Thing {
 		super("health Potion", location, value, "gives health");
 		// TODO Auto-generated constructor stub
 	}
-	private Check Used(Player player ) {
+	public void interact(Player p){
 		Used = true;
-		player.addHealth(heal);
+		p.addHealth(heal);
 		this.setDescription("A empty health potion");
-		return new Check(true, "You restored 40");
+		System.out.println("Mmmhmm that health potion sure is delicious ("+Integer.toString(heal)+" HP)");
+		p.removeThing(this);
 	}
 
 	@Override
 	public String getInteractOption() {
-		return name;
+		return "Drink health potion";
 	}
 }
 

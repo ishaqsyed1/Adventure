@@ -9,7 +9,8 @@ public abstract class Thing implements interactable{
  protected String       name;
  protected Location     location;
  protected int          value;
- protected String          description;  
+ protected String          description;
+ protected boolean       seen;
  
  public Thing(String name, Location location, int value, String description)
  {

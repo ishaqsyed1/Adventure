@@ -8,7 +8,7 @@ public class Room{
   protected List<Player>   people;
   protected List<Thing>    things;
   protected boolean dark;
-  public Room(String description, Location location, List<Location> adjacent, 
+  public Room(String description, Location location, List<Location> adjacent,
               List<Player> people, List<Thing> things,boolean isDark)
   {
     this.description = description;
@@ -27,26 +27,24 @@ public class Room{
   public List<Thing>    getThings(){ return things; }
   public String getDescription(){return description;}
   public boolean isDark(){return dark;}
-  public String look(){
+  public String look(boolean flashlightOn){
+
     // return a string describing the room 
     // (what is in it, what exits you have, etc)
     String[] itemLocationOptions =new String[]{"on the","lying on the"};
-    String[] itemPreOptions = new String[]{"you a notice a <name>","there's a <name>","after a closer look, you find a <name>","holy guacamole there's a <name>","wowsers you found a <name>"};
+    String[] itemPreOptions = new String[]{"you a notice a <name>\n","there's a <name>\n","after a closer look, you find a <name>\n","holy guacamole there's a <name>\n"," wowzers you found a <name>\n"};
     String tresure = "Oh would you look at that, a chest full of gold waiting just for you!!!";
 
-    String[] peoplePre = new String[] {"Sitting in a corner you find <name>","\"It stinks in here, it's probably because <name> is sleeping over there\"","\"Big room? battle music in the background?! Someone must be here!\"" +
-            "\n *looks around* \n It's <name>"};
+    String[] peoplePre = new String[] {"Sitting in a corner you find <name>\n","\"It stinks in here, it's probably because <name> is sleeping over there\"\n","\"Big room? battle music in the background?! Someone must be here!\"" +
+            "\n *looks around* \n It's <name>\n"};
     StringBuilder b = new StringBuilder();
-    b.append("You walk into the ");
+
     Random r = new Random();
-
-    b.append(description);
-
-    if(dark){
+    if(dark&&!flashlightOn){
       b.append("\nThe lights seem to be off, Maybe if you have a flashlight or something you'll be able to see?");
     }else{
       if(people.size()>0){
-        b.append("/n/nIt seems that there's people in the room...\n");
+        b.append("\n\nIt seems that there's people in the room...\n");
         for(Player i : people){
           b.append(peoplePre[r.nextInt(peoplePre.length)].replace("<name>",i.getName()));
         }
@@ -55,11 +53,11 @@ public class Room{
         for(Thing i: things){
           b.append(itemPreOptions[r.nextInt(itemPreOptions.length)].replace("<name>",i.getName()));
           b.append(itemLocationOptions[r.nextInt(itemLocationOptions.length)]);
-          b.append("ground.");
+          b.append(" ground.");
         }
       }
     }
-    if(dark){
+    if(dark&&!flashlightOn){
       b.append("\n\nIt seems the only door you can see is the one you came from...");
     }
     return b.toString();

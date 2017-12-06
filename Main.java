@@ -19,14 +19,26 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		World world = new World(worldConfig);
-		System.out.println(world.getRoom(new Location(world , 0, 0)).getDescription());
-		Human m = new Human(world,"The player",new Location(world,0,0),100,new ArrayList<Thing>(),null);
+		boolean won=false;
+		while(!won) {
 
-		System.out.println("Greetings traveller!\nWhat's a weary looking person like you doing here?");
-		while(true){
-			m.play();
+			World world = new World(worldConfig);
+			Human m = new Human(world, "The player", new Location(world, 0, 0), 100, new ArrayList<Thing>(), null);
 
+			System.out.println("Greetings traveller!\nWhat's a weary looking person like you doing here?");
+			while (true) {
+				m.play();
+				if (m.health <= 0) {
+					System.out.println("You died!!!\nRestarting...\n\n\n\n\n\n");
+					break;
+				}
+				if(m.location.row==0&&m.location.col==0&&m.hasTresure()){
+					System.out.println("Congrats!!! you beat the game!");
+					won=true;
+					break;
+				}
+
+			}
 		}
 	}
 }
