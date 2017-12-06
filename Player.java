@@ -13,7 +13,8 @@ public abstract class Player implements interactable{
  protected int          health = 100;
  protected List<Thing>  things;
  protected Thing        goal;
- 
+ protected int          maxHealth=100;
+ protected boolean      seen=false;
  /** Creates a player in the game
   * 
   * @param w is the world that the player lives in
@@ -55,7 +56,7 @@ public abstract class Player implements interactable{
  
  /** Plays a turn for this player
    * 
-   * For computer players will have the AI for that player.
+   * For computer players will have the TTT.AI for that player.
    * For human player querie user for input and then react 
    * appropriately for the input.
    */
@@ -107,8 +108,11 @@ public abstract class Player implements interactable{
  }
  
  public int addHealth(int heal) {
+
 	 this.health = health+heal;
-	 
+	 if(health>maxHealth){
+	  health=maxHealth;
+     }
 	 return health;
  }
  

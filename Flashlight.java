@@ -1,6 +1,6 @@
 
 public class Flashlight extends Thing {
-
+	boolean isOn =false;
 	public Flashlight(String name, Location location, int value, String description) {
 		super(name, location, value, description);
 	}
@@ -15,9 +15,15 @@ public class Flashlight extends Thing {
 			turnOn=false;;
 			return new Check(false, "Who cut the lights out?");
 		}
-
+	public boolean isON(){
+			return isOn;
+	}
+	@Override
+	public void interact(Player p){
+			isOn=!isOn;
+	}
 	@Override
 	public String getInteractOption() {
-		return name;
+		return isOn?"Turn off the flashlight":"Turn on the flashlight";
 	}
 }
