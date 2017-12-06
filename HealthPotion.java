@@ -16,6 +16,10 @@ public class HealthPotion extends Thing {
 		return new Check(true, "You restored 40");
 	}
 
+	@Override
+	public String getInteractOption() {
+		return name;
+	}
 }
 
 

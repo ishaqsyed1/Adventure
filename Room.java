@@ -37,14 +37,13 @@ public class Room{
     String[] peoplePre = new String[] {"Sitting in a corner you find <name>","\"It stinks in here, it's probably because <name> is sleeping over there\"","\"Big room? battle music in the background?! Someone must be here!\"" +
             "\n *looks around* \n It's <name>"};
     StringBuilder b = new StringBuilder();
-    b.append("You walk into a");
+    b.append("You walk into the");
     Random r = new Random();
+
+    b.append(description);
+
     if(dark){
-      b.append(" dark");
-    }
-    b.append(" room.");
-    if(dark){
-      b.append("\nMaybe if you have a flashlight or something you'll be able to see?");
+      b.append("\nThe lights seem to be off, Maybe if you have a flashlight or something you'll be able to see?");
     }else{
       if(people.size()>0){
         b.append("/n/nIt seems that there's people in the room...\n");
@@ -62,12 +61,6 @@ public class Room{
     }
     if(dark){
       b.append("\n\nIt seems the only door you can see is the one you came from...");
-    }else{
-      b.append("\n\n The doors in this room lead to:");
-      for(Location i: adjacent){
-        b.append("A door to ");
-        b.append(i.getWorld().rooms[i.col][i.row].getDescription());
-      }
     }
     return b.toString();
   }

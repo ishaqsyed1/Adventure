@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 /** A human (user) players in the game */
@@ -31,38 +33,37 @@ public class Human extends Player{
     */
   @Override
   public void play(){
-    if(verbose){System.err.println("the room as " + w.getRoom(getLocation()).getPlayers() + " players");}
-    if(verbose){System.err.println("the room as " + w.getRoom(getLocation()).getThings() + " things");}
-    Scanner in = new Scanner(System.in);
-    System.out.print("What would you like to do? [type h <enter> for help] ");
-    String action = in.nextLine();
-    if( action.trim().equals("h") ){
-      help();
-    }else if(action.trim().equals("l") ){
-      look();
-    }else if(action.trim().charAt(0) == 'g'){
-      switch( action.trim().charAt(action.trim().length()-1) ){
-        case 'e' : 
-          if(verbose){System.err.print("human was in " + this.getLocation());}
-          this.w.getRoom(this.getLocation()).removePlayer(this);
-          this.setLocation( this.getLocation().east() );
-          this.w.getRoom(this.getLocation()).addPlayer(this);
-          if(verbose){System.err.print("human now in " + this.getLocation());}
-          break;
-        case 'w' :      
-          if(verbose){System.err.print("human was in " + this.getLocation());}
-          this.w.getRoom(this.getLocation()).removePlayer(this);
-          this.setLocation( this.getLocation().west() );
-          this.w.getRoom(this.getLocation()).addPlayer(this);
-          if(verbose){System.err.print("human now in " + this.getLocation());}
-          break;
-      }
-      
+    Room currentRoom = getWorld().getRoom(this);
+    System.out.println(currentRoom.look());
+    System.out.println("\nYour options are:\n");
+    ArrayList<Option> options = getOptions();
+    Scanner systemin=new Scanner(System.in);
+    for(int i=0;i<options.size();i++){
+      System.out.println(Integer.toString(i)+". "+options.get(i).text);
     }
+    int option=Integer.parseInt(systemin.nextLine());
+    options.get(option).apply();
   }
   
   
-  
+  public ArrayList<Option> getOptions(){
+    ArrayList<Option> options=new ArrayList<>();
+    Room currentRoom = getWorld().getRoom(this);
+    for(Location i : currentRoom.adjacent){
+      Room r=getWorld().getRoom(i);
+      options.add(new MoveOption("Go to "+r.getDescription(),i));
+    }
+    for(Thing i : things){
+      options.add(new InteractOption(i));
+    }
+    for(Player i: currentRoom.getPlayers()){
+      options.add(new InteractOption(i));
+    }
+    for(Thing i:currentRoom.getThings()){
+      options.add(new PickupOption(currentRoom,i));
+    }
+    return options;
+  }
   public void look(){
     String s = "You are currently in ";
     s += w.getRoom(getLocation()).toString();
@@ -77,5 +78,57 @@ public class Human extends Player{
     s += "'w' to list what you have \n ";
     System.out.println(s);
   }
+
+  @Override
+  public String getInteractOption() {
+    return "The player";
+  }
+
+  abstract class Option{
+    String text;
+    public Option(String text){this.text=text;};
+    abstract void apply();
+  }
+
+  class MoveOption extends Option{
+    Location to;
+    public MoveOption(String text,Location loc){
+      super(text);
+      to=loc;
+    }
+
+    @Override
+    void apply() {
+     location=to;
+    }
+  }
+  class InteractOption extends Option{
+    interactable item;
+    public InteractOption(interactable item) {
+      super(item.getInteractOption());
+      this.item = item;
+    }
+
+    @Override
+    void apply() {
+      item.interact();
+    }
+  }
+  class PickupOption extends Option{
+    Thing thing;
+    Room room;
+    public PickupOption(Room room,Thing thing) {
+      super("Pick up the "+thing.getName());
+      this.thing=thing;
+      this.room=room;
+    }
+
+    @Override
+    void apply() {
+      things.add(thing);
+      room.things.remove(thing);
+    }
+  }
+
   
 }
