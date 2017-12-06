@@ -19,6 +19,7 @@ public class Player0 extends Player {
     @Override
     public void interact(Player p){
         System.out.println("I've never lost a Tic-Tac-Toe game in my life!");
+        System.out.println("*You challenge him to a TTT game*");
         TTTGame t =new TTTGame(3,false,true);
         int result = t.Start();
         if(result==1){

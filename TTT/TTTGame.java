@@ -45,7 +45,7 @@ public class TTTGame{
 			System.out.println(((player2 instanceof AI)?"Tim's ":"Player 2's " )+ "Move:\n"+ board.toString());
 			//check if win
 			if(board.checkWin()) {
-				System.out.println("And the streak continues!!");
+				System.out.println("*sigh* Kids these days will never learn.");
 				winner=player2;
 				done = true;
 				break;
