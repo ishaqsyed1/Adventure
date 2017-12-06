@@ -37,7 +37,7 @@ public class Room{
     String[] peoplePre = new String[] {"Sitting in a corner you find <name>","\"It stinks in here, it's probably because <name> is sleeping over there\"","\"Big room? battle music in the background?! Someone must be here!\"" +
             "\n *looks around* \n It's <name>"};
     StringBuilder b = new StringBuilder();
-    b.append("You walk into the");
+    b.append("You walk into the ");
     Random r = new Random();
 
     b.append(description);

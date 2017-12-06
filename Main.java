@@ -20,6 +20,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		World world = new World(worldConfig);
+		System.out.println(world.getRoom(new Location(world , 0, 0)).getDescription());
 		Human m = new Human(world,"The player",new Location(world,0,0),100,new ArrayList<Thing>(),null);
 
 		System.out.println("Greetings traveller!\nWhat's a weary looking person like you doing here?");
