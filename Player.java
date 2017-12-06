@@ -6,7 +6,7 @@ import java.util.List;
   * unique Player subtype. Your group should also have a human player.
   */
 
-public abstract class Player{
+public abstract class Player implements interactable{
  protected World        w;    // world that player lives in
  protected String       name;
  protected Location     location;
@@ -26,6 +26,7 @@ public abstract class Player{
  public Player(World w, String name, Location location, int health,
                List<Thing>  things, Thing goal)
  {
+
   this.w = w;
   this.name = name;
   this.location = location;
@@ -68,10 +69,25 @@ public abstract class Player{
    *         location to another that are not connected)
    */
  public boolean move(Location newLocation){
-   // move from current location to new location
-   // should only be allowed to move if the locations are connected
-   // (with a door that can opened)
-   return false;
+   if(location.isConnected(newLocation)){
+    if(location.col!=newLocation.col){
+     if(location.col>newLocation.col){
+      location=location.west();
+     }else{
+      location=location.north();
+     }
+    }
+     if(location.row!=newLocation.row){
+      if(location.row>newLocation.row){
+       location=location.north();
+     }else{
+       location=location.south();
+      }
+    }
+    return true;
+   }else{
+    return false;
+   }
  }
  
  /** sets a player's current location

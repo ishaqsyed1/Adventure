@@ -1,4 +1,3 @@
-
 public class Check {
 	public boolean check;
 	public String reason;

@@ -22,9 +22,11 @@ public class Location {
    * @return true if this location and the other location are adjacent to each other (connected with a door)
    */
  public boolean isConnected(Location other){
-   // using the information in the world check is this loication
-   // and other are connected.
-   return false;
+   if(world.getRoom(this).getAdjacentRooms().contains(other)){
+       return true;
+   }else{
+       return false;
+   }
  }
  
  /** Returns location to the west (left) of the current location

@@ -5,7 +5,7 @@ import java.util.List;
  * This class should be abstract and team members should be
  * creating concrete subclasses.
  */
-public abstract class Thing{
+public abstract class Thing implements interactable{
  protected String       name;
  protected Location     location;
  protected int          value;
@@ -32,7 +32,7 @@ public abstract class Thing{
  public void setValue(int v){
   this.value = v;
  }
- 
+
  public void setDescription(String description){
   this.description = description;
  }
@@ -50,7 +50,9 @@ public abstract class Thing{
  public void interact(Player p){
    // allows for some interaction with a player
  }
- 
+ public void interact(Thing t){
+  return;
+ }
  @Override
  public boolean equals(Object o){
    if( o instanceof Thing){

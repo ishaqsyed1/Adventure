@@ -5,39 +5,38 @@ public class World{
   protected Location entrance;
   protected Thing    goal;
   public World(){
-    Room r1 = new Room("the entrance", new Location(this,0,0), 
+    Room r1 = new Room("Spawn", new Location(this,0,0),
                       new java.util.ArrayList<Location>(),
                       new java.util.ArrayList<Player>(),
-                      new java.util.ArrayList<Thing>());
-    Room r2 = new Room("a dark room", new Location(this,0,1), 
+                      new java.util.ArrayList<Thing>(),false);
+    Room r2 = new Room("End", new Location(this,0,1),
                       new java.util.ArrayList<Location>(),
                       new java.util.ArrayList<Player>(),
-                      new java.util.ArrayList<Thing>());
-    r1.getAdjacentRooms().add(r2.getLocation());
-    r2.getAdjacentRooms().add(r1.getLocation());
+                      new java.util.ArrayList<Thing>(),false);
+
   
-    rooms = new Room[1][2];
-    rooms[0][0] = r1;
-    rooms[0][1] = r2;
-    entrance = r1.getLocation();
+    rooms = new Room[2][2];
+    entrance = new Location(this,0,0);
   }
   
    public World(String worldFileName){
     // create world described in file worldFileName
-	  
+	  this();
 	 // Split the string into an array of lines
 	String[] lines = worldFileName.split("[\\r\\n]+");
-	
+	Location[] roomLocations = new Location[]{new Location(this,0,0),new Location(this,1,0),new Location(this,1,1),new Location(this,0,1)};
 	// initialize number of rooms
 	int numberOfRooms = Integer.parseInt(lines[0]);
 	
 	// loop through the arrays while parsing the config file data
 	for(int offset=0; offset < numberOfRooms; offset++) {
 		int currentRoomNum = Integer.parseInt(lines[0 + 1 + (offset*5)]);
+
 		String roomName = lines[ 1 + 1 + (offset*5)];
-		String[] roomsList = (lines[2 + 1 + (offset*5)]).split(", ");
-		String [] playerNum = (lines[3 + 1 + (offset*5)]).split(" , ");
+		String[] roomsList = (lines[2 + 1 + (offset*5)]).split(",");
+		String [] playerNum = (lines[3 + 1 + (offset*5)]).split(",");
 		String thingNum = (lines[4 + 1 + (offset*5)]);
+		Location roomLocation=roomLocations[currentRoomNum-1];
 
 		// displays the roomNumber as String
 		System.out.println(currentRoomNum);
@@ -52,32 +51,35 @@ public class World{
 	// creates array from file for adjacent rooms
 		ArrayList<Location> adjacentRooms = new ArrayList<Location>();
 		for(int room=0; room < roomsList.length; room++) {
-			int adjacentRoomNum = Integer.parseInt(roomsList[room]);
-			Location adjRoomLocation = new Location(this, 0, 0);
+			int adjacentRoomNum = Integer.parseInt(roomsList[room].trim());
+
+			Location adjRoomLocation = roomLocations[adjacentRoomNum-1];
 			adjacentRooms.add(adjRoomLocation);
 			
 		ArrayList<Location> playerList = new ArrayList<Location>();
 			for(int player=0; player < playerNum.length; player++) {
-				int playerRoomNum = Integer.parseInt(playerNum[player]);
+				int playerRoomNum = Integer.parseInt(playerNum[player].trim());
 				Location playerLocation = new Location(this, 0,0);
 				playerList.add(playerLocation);
 			}
 		}
 		
-		
+
 		Room room =new Room(roomName, new Location(this,0,0), 
 				adjacentRooms,
                 new java.util.ArrayList<Player>(),
-                new java.util.ArrayList<Thing>());
-	}	
-	
+                new java.util.ArrayList<Thing>(),false);
+		rooms[roomLocation.row][roomLocation.col]=room;
+	}
   }
   
   public Location getEntrance(){
 	  System.out.println("Changes");
 	  return entrance;
   }
-  
+  public Location getRoomLocationFromID(int id,int total){
+  	return new Location((id-1)%(total/2),id>?)
+  }
   public Thing getGoal(){ return goal;}
   
   /** returns room of spcified Player */

@@ -16,4 +16,8 @@ public class Flashlight extends Thing {
 			return new Check(false, "Who cut the lights out?");
 		}
 
+	@Override
+	public String getInteractOption() {
+		return name;
+	}
 }

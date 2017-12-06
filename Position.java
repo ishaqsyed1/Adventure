@@ -7,12 +7,13 @@ public class Position {
 		this.y = y;
 	}
 
-//	@Override
-//	public boolean equals(Object o) {
-//		if (o instanceof Position) {
-//			return this.x == o.x && this.y == o.y;
-//		} else {
-//			return false;
-//		}
-//	}
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Position) {
+			Position other = (Position)o;
+			return this.x == other.x && this.y == other.y;
+		} else {
+			return false;
+		}
+	}
 }

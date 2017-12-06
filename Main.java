@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -17,7 +19,13 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 		World world = new World(worldConfig);
+		Human m = new Human(world,"The player",new Location(world,0,0),100,new ArrayList<Thing>(),null);
+
+		System.out.println("Greetings traveller!\nWhat's a weary looking person like you doing here?");
+		while(true){
+			m.play();
+
+		}
 	}
 }
